@@ -31,12 +31,17 @@ App = {
 
     web3 = new Web3(App.web3Provider);
 
-    App.initTransak();
+    web3.eth.getAccounts(function(error, accounts) {
+      var account = accounts[0];
+      App.initTransak(account);
+    });
 
     return App.initContract();
   },
 
-  initTransak: function() {
+  initTransak: function(walletAddress) {
+    $('#transakIframe').attr('src', 'https://staging-global.transak.com?apiKey=b2ce2203-845f-4e9b-80fa-b8ee54e62ba5&fiatCurrency=USD&defaultFiatAmount=99&cryptoCurrencyCode=ETH&walletAddress=' + walletAddress + '&disableWalletAddressForm=true');
+
     let transak = new TransakSDK.default({
       apiKey: 'b2ce2203-845f-4e9b-80fa-b8ee54e62ba5',
       environment: 'STAGING',
@@ -47,7 +52,8 @@ App = {
       defaultFiatAmount: '99',
       fiatCurrency: 'USD',
       cryptoCurrencyCode: 'ETH',
-      walletAddress: '0x860A7555653810d0F86b942563cFC4374e4E7a77',
+      walletAddress,
+      disableWalletAddressForm: true,
       // themeColor: '[COLOR_HEX]',
       // email: '',
       // redirectURL: ''
