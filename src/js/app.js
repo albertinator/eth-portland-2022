@@ -152,6 +152,7 @@ App = {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
     $(document).on('click', '.btn-create-trust', App.handleCreateTrust);
     $(document).on('click', '.btn-fund', App.handleFund);
+    $(document).on('click', '.btn-transfer-funds-to-heir', App.handleTransferFundsToHeir)
   },
 
   markAdopted: function() {
@@ -261,6 +262,25 @@ App = {
     //     }
     //   });
     // });
+  },
+
+  handleTransferFundsToHeir: function(event) {
+    // call smart contract's attemptTransfer()
+    App.contracts.Trust.deployed().then(function(instance) {
+      trustInstance = instance;
+
+      web3.eth.getAccounts(function(err, accounts) {
+        if (err) { console.log(err) }
+
+        const account = accounts[0];
+
+        // Execute init as a transaction by sending account
+        return trustInstance.attemptTransfer({
+          from: account
+        });
+      });
+
+    });
   }
 
 };
