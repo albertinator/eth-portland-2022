@@ -69,6 +69,28 @@ App = {
     // This will trigger when the user marks payment is made.
     transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (orderData) => {
       console.log(orderData);
+
+      // call fund() on smart contract
+      // const ethFunded = orderData.status.cryptoAmount;
+      // web3.eth.getAccounts((err, accounts) => {
+      //   if (err) { console.log(err) }
+      //   const account = accounts[0];
+
+      //   App.contracts.Trust.deployed().then(function(instance) {
+      //     trustInstance = instance;
+
+      //     return trustInstance.fund().send({
+      //       from: account,
+      //       gas: 470000,
+      //       value: web3.toWei(ethFunded, 'ether'),
+      //       gasPrice: 0,
+      //     })
+      //   });
+      // })
+
+      // refresh balance after this funding
+      App.getTrustInfo();
+
       transak.close();
     });
   },
