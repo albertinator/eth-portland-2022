@@ -4,11 +4,13 @@
 
 During ETH Portland 2022, I implemented an irrevocable living trust account that has an age trigger for releasing wealth to a user's heir.
 
-I wrote the contract code in Solidity, deployable to the ETH blockchain. I also built a frontend that lets a user:
-* Set the terms of the trust (using web3.js to write to ETH blockchain)
-* Display the terms and current balance of the trust (using web3.js to read from ETH blockchain)
-* Fund the trust with fiat-to-crypto on ramp (powered by Transak)
-* Attempt to transfer funds in the trust to the heir, which will fail if contract terms are not met (using web3.js to write to ETH blockchain)
+I wrote the contract code in Solidity, deployable to any EVM-compatible blockchain. I also built a frontend that lets a user:
+* Set the terms of the trust (using web3.js to write to EVM-compatible blockchain)
+* Display the terms and current balance of the trust (using web3.js to read from EVM-compatible blockchain)
+* Fund the trust with fiat-to-crypto on ramp (powered by [Transak](https://transak.com))
+* Attempt to transfer funds in the trust to the heir, which will fail if contract terms are not met (using web3.js to write to EVM-compatible blockchain)
+
+I also demonstrated that this is deployable to and frontend connects interchangably between [Harmony Testnet](https://dev.harmony.one) and an ETH node, just by switching an environment variable.
 
 Trust funds are an important part of estate planning and the transfer of wealth to heirs. In fact, in just the United States, there is about $2 trillion locked up in these old school contracts.
 
@@ -38,6 +40,11 @@ and then following [https://trufflesuite.com/tutorial](https://trufflesuite.com/
 ```bash
 $ truffle compile
 $ truffle migrate
+```
+
+Sometimes you'll need to reset, or run migrations on a different network:
+```bash
+$ truffle migrate --network testnet --reset
 ```
 
 ## Frontend
