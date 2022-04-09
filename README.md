@@ -4,6 +4,12 @@
 
 During ETH Portland 2022, I implemented an irrevocable living trust account that has an age trigger for releasing wealth to a user's heir.
 
+I wrote the contract code in Solidity, deployable to the ETH blockchain. I also built a frontend that lets a user:
+* Set the terms of the trust (using web3.js to write to ETH blockchain)
+* Display the terms and current balance of the trust (using web3.js to read from ETH blockchain)
+* Fund the trust with fiat-to-crypto on ramp (powered by Transak)
+* Attempt to transfer funds to the heir, which will fail if contract terms are not met (using web3.js to write to ETH blockchain)
+
 Trust funds are an important part of estate planning and the transfer of wealth to heirs. In fact, in just the United States, there is about $2 trillion locked up in these old school contracts.
 
 Trust funds today are implemented manually with a few unattractive ~~features~~ bugs:
