@@ -44,7 +44,7 @@ contract Trust {
   // the condition of transfer is very clear
   function attemptTransfer() public {
     require(
-      funded && block.timestamp > transferDate,
+      block.timestamp > transferDate,
       "Not yet!"
     );
     heir.transfer(address(this).balance);
