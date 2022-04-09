@@ -8,7 +8,7 @@ I wrote the contract code in Solidity, deployable to the ETH blockchain. I also 
 * Set the terms of the trust (using web3.js to write to ETH blockchain)
 * Display the terms and current balance of the trust (using web3.js to read from ETH blockchain)
 * Fund the trust with fiat-to-crypto on ramp (powered by Transak)
-* Attempt to transfer funds to the heir, which will fail if contract terms are not met (using web3.js to write to ETH blockchain)
+* Attempt to transfer funds in the trust to the heir, which will fail if contract terms are not met (using web3.js to write to ETH blockchain)
 
 Trust funds are an important part of estate planning and the transfer of wealth to heirs. In fact, in just the United States, there is about $2 trillion locked up in these old school contracts.
 
