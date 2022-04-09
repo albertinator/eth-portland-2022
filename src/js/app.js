@@ -3,6 +3,18 @@ App = {
   transak: null,
   contracts: {},
 
+  // Harmony Testnet - testnet
+  // ETH Develop - development
+  network: 'testnet',
+
+  // Harmony Testnet - https://api.s0.b.hmny.io
+  // ETH Develop - http://localhost:7545
+  networkRpc: App.network === 'testnet' ? 'https://api.s0.b.hmny.io' : 'http://localhost:7545',
+
+  // Harmony Testnet - ONE
+  // ETH Develop - ETH
+  networkCurrency: App.network === 'testnet' ? 'ONE' : 'ETH'
+
   init: async function() {
     return await App.initWeb3();
   },
@@ -27,7 +39,7 @@ App = {
 
     // If no injected web3 instance is detected, fall back to Ganache
     else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      App.web3Provider = new Web3.providers.HttpProvider(App.networkRpc);
     }
 
     web3 = new Web3(App.web3Provider);
@@ -41,8 +53,6 @@ App = {
   },
 
   initTransak: function(walletAddress) {
-    $('#transakIframe').attr('src', 'https://staging-global.transak.com?apiKey=b2ce2203-845f-4e9b-80fa-b8ee54e62ba5&fiatCurrency=USD&defaultFiatAmount=99&cryptoCurrencyCode=ETH&walletAddress=' + walletAddress + '&disableWalletAddressForm=true');
-
     transak = new TransakSDK.default({
       apiKey: 'b2ce2203-845f-4e9b-80fa-b8ee54e62ba5',
       environment: 'STAGING',
@@ -52,7 +62,9 @@ App = {
       // Examples of some of the customization parameters you can pass
       defaultFiatAmount: '99',
       fiatCurrency: 'USD',
-      cryptoCurrencyCode: 'ETH',
+      // cryptoCurrencyCode: 'ETH', // forced single currency
+      cryptoCurrencyList: 'ONE,ETH',
+      defaultCryptoCurrency: 'ONE',
       walletAddress,
       disableWalletAddressForm: true,
       // themeColor: '[COLOR_HEX]',
@@ -142,7 +154,7 @@ App = {
         var account = accounts[0];
 
         web3.eth.getBalance(account, function(error, balance) {
-          $('.balance').text(web3.fromWei(balance, "ether") + " ETH");
+          $('.balance').text(web3.fromWei(balance, "ether") + " " + App.networkCurrency);
         })
       });
     })
