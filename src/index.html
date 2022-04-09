@@ -17,6 +17,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="https://global.transak.com/sdk/v1.1/widget.js" async></script>
+
     <style>
       .spacer { margin-bottom: 20px; }
       .spacer-sm { margin-bottom: 10px; }
@@ -184,14 +186,14 @@
             <div class="spacer-sm"></div>
 
             <div class="col">
-              <button class="btn btn-default btn-fund">Fund</button>
+              <button class="btn btn-default btn-fund" style="display: none;">Fund</button>
             </div>
 
             <div class="spacer-sm"></div>
 
             <div class="col">
               <iframe height="625" title="Transak On/Off Ramp Widget"
-src="https://staging-global.transak.com?apiKey=b2ce2203-845f-4e9b-80fa-b8ee54e62ba5"
+src="https://staging-global.transak.com?apiKey=b2ce2203-845f-4e9b-80fa-b8ee54e62ba5&fiatCurrency=USD&defaultFiatAmount=99&cryptoCurrencyCode=ETH"
 frameborder="no" allowtransparency="true" allowfullscreen=""
 style="display: block; width: 100%; max-height: 625px; max-width: 500px;">
               </iframe>

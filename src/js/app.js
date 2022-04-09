@@ -31,7 +31,40 @@ App = {
 
     web3 = new Web3(App.web3Provider);
 
+    App.initTransak();
+
     return App.initContract();
+  },
+
+  initTransak: function() {
+    let transak = new TransakSDK.default({
+      apiKey: 'b2ce2203-845f-4e9b-80fa-b8ee54e62ba5',
+      environment: 'STAGING',
+      hostURL: window.location.origin,
+      widgetHeight: '625px',
+      widgetWidth: '500px',
+      // Examples of some of the customization parameters you can pass
+      defaultFiatAmount: '99',
+      fiatCurrency: 'USD',
+      cryptoCurrencyCode: 'ETH',
+      walletAddress: '0x860A7555653810d0F86b942563cFC4374e4E7a77',
+      // themeColor: '[COLOR_HEX]',
+      // email: '',
+      // redirectURL: ''
+    });
+
+    transak.init();
+
+    // To get all the events
+    transak.on(transak.ALL_EVENTS, (data) => {
+      console.log(data);
+    });
+
+    // This will trigger when the user marks payment is made.
+    transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (orderData) => {
+      console.log(orderData);
+      transak.close();
+    });
   },
 
   initContract: function() {
