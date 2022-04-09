@@ -33,7 +33,7 @@ contract Trust {
   }
 
   // although this is meant for a trustee to invoke
-  // anyone can attempt transfer since the condition of transfer is pretty clear
+  // anyone can attempt transfer since the condition of transfer is very clear
   function attemptTransfer() public {
     require(block.timestamp > transferDate, "Not yet!");
     heir.transfer(address(this).balance);

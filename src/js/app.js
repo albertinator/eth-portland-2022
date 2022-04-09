@@ -63,18 +63,18 @@ App = {
 
       return trustInstance.creator.call();
     }).then(function(creator) {
-      $('.creator').text("Creator: " + creator);
+      $('.creator').text(creator);
       return trustInstance.heir.call();
     }).then(function(heir) {
-      $('.heir').text("Heir: " + heir);
+      $('.heir').text(heir);
       return trustInstance.usState.call();
     }).then(function(usState) {
-      $('.usState').text("US State: " + usState);
+      $('.usState').text(usState);
       return trustInstance.transferDate.call();
     }).then(function(transferDate) {
       var transferDateHuman = new Date(0);
       transferDateHuman.setUTCSeconds(transferDate);
-      $('.transferDate').text("Transfer Date: " + transferDateHuman);
+      $('.transferDate').text(transferDateHuman);
     })
   },
 
@@ -131,6 +131,15 @@ App = {
   handleCreateTrust: function(event) {
     event.preventDefault();
 
+    var heirInput = $('#heirInput').val();
+    var usStateInput = $('#usStateInput').val();
+    var age = parseInt($('#age').val());
+    var heirDobRaw = $('#heirDob').val();
+    var year = heirDobRaw.substring(0, 4);
+    var month = heirDobRaw.substring(5, 7);
+    var day = heirDobRaw.substring(8, 10);
+    var heirDob = new Date(year, month - 1, day);
+
     var trustInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
@@ -145,9 +154,9 @@ App = {
 
         // Execute init as a transaction by sending account
         return trustInstance.initContract(
-          '0xD48Cc8011633a73E97B753DB16e76F019C2c3AB9', // heir address
-          'OR',
-          Math.round((new Date()).getTime() / 1000),
+          heirInput, // heir address
+          usStateInput,
+          Math.round(heirDob.getTime() / 1000) + age*31536000,
           { from: account }
         );
       }).then(function(result) {
@@ -163,5 +172,11 @@ App = {
 $(function() {
   $(window).load(function() {
     App.init();
+
+    setInterval(function() {
+      $('.current-time').text(
+        (new Date()).toString()
+      );
+    }, 1000);
   });
 });

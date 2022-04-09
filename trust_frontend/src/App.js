@@ -8,6 +8,7 @@ function App() {
   const [account, setAccount] = useState();
   const [trustContract, setTrustContract] = useState();
   const [balance, setBalance] = useState(0);
+  const [creator, setCreator] = useState();
 
   useEffect(() => {
     async function load() {
@@ -19,6 +20,9 @@ function App() {
       // Instantiate smart contract using ABI and address.
       const c = new web3.eth.Contract(TRUST_ABI, TRUST_ADDRESS);
       setTrustContract(c);
+
+      const usState = await c.methods.something().call();
+      setCreator(usState);
 
       // Instantiate balance of the trust
       web3.eth.getBalance(TRUST_ADDRESS, (err, wei) => {
@@ -34,6 +38,8 @@ function App() {
       This is the account: {account}
       <br />
       This is the balance: {balance}
+      <br />
+      This is the creator: {creator}
     </div>
   );
 }
