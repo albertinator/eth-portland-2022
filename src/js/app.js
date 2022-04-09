@@ -1,5 +1,6 @@
 App = {
   web3Provider: null,
+  transak: null,
   contracts: {},
 
   init: async function() {
@@ -42,7 +43,7 @@ App = {
   initTransak: function(walletAddress) {
     $('#transakIframe').attr('src', 'https://staging-global.transak.com?apiKey=b2ce2203-845f-4e9b-80fa-b8ee54e62ba5&fiatCurrency=USD&defaultFiatAmount=99&cryptoCurrencyCode=ETH&walletAddress=' + walletAddress + '&disableWalletAddressForm=true');
 
-    let transak = new TransakSDK.default({
+    transak = new TransakSDK.default({
       apiKey: 'b2ce2203-845f-4e9b-80fa-b8ee54e62ba5',
       environment: 'STAGING',
       hostURL: window.location.origin,
@@ -59,7 +60,7 @@ App = {
       // redirectURL: ''
     });
 
-    transak.init();
+    // transak.init();
 
     // To get all the events
     transak.on(transak.ALL_EVENTS, (data) => {
@@ -238,27 +239,28 @@ App = {
   },
 
   handleFund: function(event) {
-    web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
+    transak.init();
+    // web3.eth.getAccounts(function(error, accounts) {
+    //   if (error) {
+    //     console.log(error);
+    //   }
 
-      var account = accounts[0];
+    //   var account = accounts[0];
 
-      web3.eth.sendTransaction({
-        from: '0x73Cc560a5b02792e10468C2b3615e09179f9ebb3',
-        to: '0x860A7555653810d0F86b942563cFC4374e4E7a77',
-        value: web3.toWei(1, 'ether'),
-        gasLimit: 21000,
-        gasPrice: 20000000000,
-      }, function(error, result) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('SUCCESS');
-        }
-      });
-    });
+    //   web3.eth.sendTransaction({
+    //     from: '0x73Cc560a5b02792e10468C2b3615e09179f9ebb3',
+    //     to: '0x860A7555653810d0F86b942563cFC4374e4E7a77',
+    //     value: web3.toWei(1, 'ether'),
+    //     gasLimit: 21000,
+    //     gasPrice: 20000000000,
+    //   }, function(error, result) {
+    //     if (error) {
+    //       console.log(error);
+    //     } else {
+    //       console.log('SUCCESS');
+    //     }
+    //   });
+    // });
   }
 
 };
