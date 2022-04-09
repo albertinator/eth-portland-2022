@@ -9,11 +9,11 @@ App = {
 
   // Harmony Testnet - https://api.s0.b.hmny.io
   // ETH Develop - http://localhost:7545
-  networkRpc: App.network === 'testnet' ? 'https://api.s0.b.hmny.io' : 'http://localhost:7545',
+  networkRpc: 'https://api.s0.b.hmny.io',
 
   // Harmony Testnet - ONE
   // ETH Develop - ETH
-  networkCurrency: App.network === 'testnet' ? 'ONE' : 'ETH'
+  networkCurrency: 'ONE',
 
   init: async function() {
     return await App.initWeb3();
