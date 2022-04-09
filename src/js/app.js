@@ -75,6 +75,14 @@ App = {
       var transferDateHuman = new Date(0);
       transferDateHuman.setUTCSeconds(transferDate);
       $('.transferDate').text(transferDateHuman);
+
+      web3.eth.getAccounts(function(error, accounts) {
+        var account = accounts[0];
+
+        web3.eth.getBalance(account, function(error, balance) {
+          $('.balance').text(web3.fromWei(balance, "ether") + " ETH");
+        })
+      });
     })
   },
 
