@@ -1,6 +1,7 @@
 pragma solidity ^0.5.0;
 
-// every user will have an instance of this contract deployed to their wallet address in the custody of the service
+// every user has an instance of this
+// contract deployed to their wallet
 contract Trust {
   address public creator;
   address payable public heir;
@@ -9,33 +10,43 @@ contract Trust {
   bool public funded;
 
   modifier onlyCreator() {
-    require(msg.sender == creator, "Only creator can call this method");
+    require(
+      msg.sender == creator,
+      "Only creator can call this method"
+    );
     _;
   }
 
+  constructor() public {
+    creator = msg.sender;
+  }
+
+  // only the creator can set the contract terms once
   function initContract(
     address payable _heir,
     string memory _usState,
     uint _transferDate
-  ) public {
-    require (creator == address(0), "Already initialized");
-    creator = msg.sender;
+  ) onlyCreator public {
+    require (heir == address(0), "Already initialized");
     heir = _heir;
     usState = _usState;
     transferDate = _transferDate;
     funded = false;
   }
 
-  // creator can fund once
+  // only the creator can fund the account
   function fund() onlyCreator external payable {
-    require(!funded, "Already funded");
     funded = true;
   }
 
   // although this is meant for a trustee to invoke
-  // anyone can attempt transfer since the condition of transfer is very clear
+  // anyone can attempt transfer because
+  // the condition of transfer is very clear
   function attemptTransfer() public {
-    require(block.timestamp > transferDate, "Not yet!");
+    require(
+      funded && block.timestamp > transferDate,
+      "Not yet!"
+    );
     heir.transfer(address(this).balance);
   }
 }
