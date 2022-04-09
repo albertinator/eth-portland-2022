@@ -28,6 +28,7 @@ contract Trust {
     uint _transferDate
   ) onlyCreator public {
     require (heir == address(0), "Already initialized");
+
     heir = _heir;
     usState = _usState;
     transferDate = _transferDate;
@@ -40,13 +41,14 @@ contract Trust {
   }
 
   // although this is meant for a trustee to invoke
-  // anyone can attempt transfer because
-  // the condition of transfer is very clear
+  // anyone can attempt transfer because the
+  // condition and recipient of transfer is very clear
   function attemptTransfer() public {
     require(
       block.timestamp > transferDate,
       "Not yet!"
     );
+
     heir.transfer(address(this).balance);
   }
 }
