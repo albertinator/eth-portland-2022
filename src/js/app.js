@@ -89,6 +89,7 @@ App = {
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
     $(document).on('click', '.btn-create-trust', App.handleCreateTrust);
+    $(document).on('click', '.btn-fund', App.handleFund);
   },
 
   markAdopted: function() {
@@ -171,6 +172,30 @@ App = {
         return App.getTrustInfo();
       }).catch(function(err) {
         console.log(err.message);
+      });
+    });
+  },
+
+  handleFund: function(event) {
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+
+      web3.eth.sendTransaction({
+        from: '0x73Cc560a5b02792e10468C2b3615e09179f9ebb3',
+        to: '0x860A7555653810d0F86b942563cFC4374e4E7a77',
+        value: web3.toWei(1, 'ether'),
+        gasLimit: 21000,
+        gasPrice: 20000000000,
+      }, function(error, result) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('SUCCESS');
+        }
       });
     });
   }
