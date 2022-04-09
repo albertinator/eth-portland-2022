@@ -45,7 +45,8 @@ contract Trust {
   // condition and recipient of transfer is very clear
   function attemptTransfer() public {
     require(
-      block.timestamp > transferDate,
+      heir != address(0) &&
+        block.timestamp > transferDate,
       "Not yet!"
     );
 
