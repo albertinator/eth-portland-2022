@@ -266,20 +266,21 @@ App = {
 
   handleTransferFundsToHeir: function(event) {
     // call smart contract's attemptTransfer()
-    App.contracts.Trust.deployed().then(function(instance) {
-      trustInstance = instance;
 
-      web3.eth.getAccounts(function(err, accounts) {
-        if (err) { console.log(err) }
+    web3.eth.getAccounts(function(err, accounts) {
+      if (err) { console.log(err) }
+      const account = accounts[0];
 
-        const account = accounts[0];
+      App.contracts.Trust.deployed().then((instance) => {
+        const trustInstance = instance;
 
-        // Execute init as a transaction by sending account
+        // attempt a transfer on the smart contract
         return trustInstance.attemptTransfer({
-          from: account
+          from: account,
         });
+      }).then(() => {
+        App.getTrustInfo();
       });
-
     });
   }
 
