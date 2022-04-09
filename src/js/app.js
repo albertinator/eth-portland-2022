@@ -280,6 +280,8 @@ App = {
         });
       }).then(() => {
         App.getTrustInfo();
+      }).catch(function(err) {
+        console.log(err.message);
       });
     });
   }
